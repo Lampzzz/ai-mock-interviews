@@ -1,9 +1,14 @@
+import InterviewCard from "@/components/interview-card";
 import { Button } from "@/components/ui/button";
+import { dummyInterviews } from "@/constants";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
 const Page = () => {
+  const hasPastInterviews = 1;
+  const hasUpcomingInterviews = 1;
+
   return (
     <>
       <section className="card-cta">
@@ -31,11 +36,11 @@ const Page = () => {
         <h2>Your Interviews</h2>
 
         <div className="interviews-section">
-          {/* {hasPastInterviews ? (
-            userInterviews?.map((interview) => (
+          {hasPastInterviews ? (
+            dummyInterviews?.map((interview) => (
               <InterviewCard
                 key={interview.id}
-                userId={user?.id}
+                userId={interview?.id}
                 interviewId={interview.id}
                 role={interview.role}
                 type={interview.type}
@@ -45,20 +50,19 @@ const Page = () => {
             ))
           ) : (
             <p>You haven&apos;t taken any interviews yet</p>
-          )} */}
-          <p>You haven&apos;t taken any interviews yet</p>
+          )}
         </div>
       </section>
 
       <section className="flex flex-col gap-6 mt-8">
         <h2>Take Interviews</h2>
 
-        {/* <div className="interviews-section">
+        <div className="interviews-section">
           {hasUpcomingInterviews ? (
-            allInterview?.map((interview) => (
+            dummyInterviews?.map((interview) => (
               <InterviewCard
                 key={interview.id}
-                userId={user?.id}
+                userId={interview?.id}
                 interviewId={interview.id}
                 role={interview.role}
                 type={interview.type}
@@ -69,8 +73,7 @@ const Page = () => {
           ) : (
             <p>There are no interviews available</p>
           )}
-        </div> */}
-        <p>There are no interviews available</p>
+        </div>
       </section>
     </>
   );
