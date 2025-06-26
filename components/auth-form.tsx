@@ -17,6 +17,7 @@ import {
 } from "firebase/auth";
 import { auth } from "@/firebase/client";
 import { signIn, signUp } from "@/lib/actions/auth.action";
+import { FirebaseError } from "firebase/app";
 
 const authFormSchema = (type: FormType) => {
   return z.object({
@@ -88,8 +89,25 @@ const AuthForm = ({ type }: { type: FormType }) => {
         router.push("/");
       }
     } catch (error) {
-      console.log(error);
-      toast.error(`There was an error: ${error}`);
+      console.log("Error:", error);
+
+      if (error instanceof FirebaseError) {
+        console.log("FirebaseError:", error.code);
+
+        switch (error.code) {
+          case "auth/invalid-credential":
+          case "auth/wrong-password":
+            toast.error("Wrong email or password.");
+            break;
+          case "auth/too-many-requests":
+            toast.error("Too many failed attempts. Please try again later.");
+            break;
+          default:
+            toast.error(`Authentication error: ${error.message}`);
+        }
+      } else {
+        toast.error("An unexpected error occurred. Please try again.");
+      }
     }
   };
 
